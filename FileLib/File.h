@@ -16,6 +16,10 @@ bool checkDirectory(const string& Path);
 
 void openFile(const string& Path);
 
+bool copyFile(const std::string& file, const std::string& destDir);
+
+vector<string> splitString(const string& str);
+
 vector<string> listFilesInDirectory(const std::string& directoryPath, bool Recursive = false);
 
 class filesPathLogResult {

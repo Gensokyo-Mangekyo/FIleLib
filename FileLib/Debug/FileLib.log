@@ -1,3 +1,4 @@
 ﻿  File.cpp
 C:\Users\Администратор\Desktop\C++ C\Либы\File\FileLib\File.cpp(58,40): warning C4101: e: неиспользованная локальная переменная
+C:\Users\Администратор\Desktop\C++ C\Либы\File\FileLib\File.cpp(123,40): warning C4101: e: неиспользованная локальная переменная
   FileLib.vcxproj -> C:\Users\Администратор\Desktop\C++ C\Либы\File\Debug\FileLib.lib

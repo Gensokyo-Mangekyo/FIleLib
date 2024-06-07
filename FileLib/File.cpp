@@ -91,6 +91,42 @@ vector<string> filesPathLogResult::getFailedFiles() {
     return failedFiles;
 }
 
+vector<string> splitString(const string& str) {
+    vector<string> result;
+    istringstream iss(str);
+    string word;
+
+    while (iss >> word) {
+        result.push_back(word);
+    }
+
+    return result;
+}
+
+bool copyFile(const std::string& file, const std::string& destDir) {
+    if (!fs::is_regular_file(file))
+        return false;
+
+    int index = destDir.find_last_of("\\");
+
+    if (index != string::npos) {
+        string dir = destDir.substr(0, index);
+
+        if (!fs::exists(destDir)) {
+            fs::create_directory(destDir);
+        }
+    }
+    try
+    {
+        fs::copy(file, destDir, fs::copy_options::overwrite_existing | fs::copy_options::recursive); 
+    }
+    catch (const fs::filesystem_error& e)
+    {
+        return false;
+    }
+    return true;
+}
+
 filesPathLogResult* copyFiles(const std::string& sourceDir, const std::string& destDir,bool Recursive) {
 
     filesPathLogResult* logResult = new filesPathLogResult();
@@ -100,17 +136,13 @@ filesPathLogResult* copyFiles(const std::string& sourceDir, const std::string& d
         return logResult;
     }
 
-    if (!fs::exists(destDir)) {
-        fs::create_directories(destDir);
-    }
-
     vector<string> paths = listFilesInDirectory(sourceDir,Recursive); //Эта функция может получать подкатологи путей файлов
     for (const string& path : paths) {
         string dest = destDir + "\\" + path.substr(path.find_last_of("\\"));
         try
         {
             fs::copy(path, dest, fs::copy_options::overwrite_existing | fs::copy_options::recursive);
-            logResult->pushSuccefullFilePath(dest); //Почему здесь ошибка C4700?
+            logResult->pushSuccefullFilePath(dest);
         }
         catch (const fs::filesystem_error& e)
         {
