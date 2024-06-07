@@ -3,6 +3,7 @@
 #include "File.h"
 #include "DirectoryNotFoundException.h"
 #include <string>
+#include <sstream>
 
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #include <experimental/filesystem>
@@ -32,6 +33,13 @@ string getAppData() {
 
 bool checkDirectory(const string& Path) {
 	return   (fs::exists(Path) || fs::is_directory(Path));
+}
+
+void openFile(const string& Path) {
+    ostringstream oss;
+    string semicolon = "\"";
+    oss << "start \"\" " <<  semicolon << Path << semicolon;
+    system(oss.str().c_str());
 }
 
 vector<string> listFilesInDirectory(const std::string& directoryPath, bool Recursive) {

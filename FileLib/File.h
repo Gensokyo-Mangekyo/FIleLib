@@ -14,6 +14,8 @@ string getAppData();
 
 bool checkDirectory(const string& Path);
 
+void openFile(const string& Path);
+
 vector<string> listFilesInDirectory(const std::string& directoryPath, bool Recursive = false);
 
 class filesPathLogResult {
